@@ -1,6 +1,11 @@
-import { Link, Outlet } from "react-router";
+import { Form, Link, NavLink, Outlet, useLoaderData } from "react-router";
+
+
 
 export default function Root() {
+    const { contacts } = useLoaderData();
+    console.log(contacts);
+
     return (
         <>
             <div id="sidebar">
@@ -24,19 +29,48 @@ export default function Root() {
                             aria-live="polite"
                         ></div>
                     </form>
-                    <form method="post">
+                    <Form method="post">
                         <button type="submit">New</button>
-                    </form>
+                    </Form>
                 </div>
                 <nav>
-                    <ul>
-                        <li>
-                            <Link to={`/contacts/1`}>Your Name</Link>
-                        </li>
-                        <li>
-                            <Link to={`/contacts/2`}>Your Friend</Link>
-                        </li>
-                    </ul>
+                    {contacts.length ? (
+                        <ul>
+                            {contacts.map((contact) => (
+                                <li key={contact.id}>
+                                    <NavLink
+                                        to={`contacts/${contact.id}`}
+                                        className={({ isActive, isPending }) =>
+                                            isPending ? "pending" : isActive ? "active" : ""
+                                        }
+                                    >
+                                        {contact.first || contact.last ? (
+                                            <>
+                                                {contact.first} {contact.last}
+                                            </>
+                                        ) : (
+                                            <i>No Name</i>
+                                        )}{" "}
+                                        {contact.favorite && <span>★</span>}
+                                    </NavLink>
+                                    {/* <Link to={`contacts/${contact.id}`}>
+                                        {contact.first || contact.last ? (
+                                            <>
+                                                {contact.first} {contact.last}
+                                            </>
+                                        ) : (
+                                            <i>No Name</i>
+                                        )}{" "}
+                                        {contact.favorite && <span>★</span>}
+                                    </Link> */}
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <p>
+                            <i>No contacts</i>
+                        </p>
+                    )}
                 </nav>
             </div>
             <div id="detail">
@@ -45,3 +79,4 @@ export default function Root() {
         </>
     );
 }
+
