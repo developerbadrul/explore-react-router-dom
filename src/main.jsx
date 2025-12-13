@@ -6,7 +6,7 @@ import Root from './routes/root'
 import { RootErrorBoundary } from './error-page'
 import Contact from './routes/Contact'
 import { getContactLoader, getSingleContact } from './contactsLoader'
-import { createContactAction, editContactAction } from './contactsAction'
+import { createContactAction, deleteContactAction, editContactAction } from './contactsAction'
 import EditContact from './routes/EditContact'
 
 
@@ -28,6 +28,10 @@ const router = createBrowserRouter([
         Component: EditContact,
         loader: getSingleContact,
         action: editContactAction
+      },
+      {
+        path: "contacts/:contactId/destroy",
+        action: deleteContactAction
       },
     ],
   }

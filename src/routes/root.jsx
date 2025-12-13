@@ -1,9 +1,10 @@
-import { Form, Link, NavLink, Outlet, useLoaderData } from "react-router";
+import { Form, NavLink, Outlet, useLoaderData, useNavigation } from "react-router";
 
 
 
 export default function Root() {
     const { contacts } = useLoaderData();
+    const navigation = useNavigation()
     console.log(contacts);
 
     return (
@@ -53,16 +54,7 @@ export default function Root() {
                                         )}{" "}
                                         {contact.favorite && <span>★</span>}
                                     </NavLink>
-                                    {/* <Link to={`contacts/${contact.id}`}>
-                                        {contact.first || contact.last ? (
-                                            <>
-                                                {contact.first} {contact.last}
-                                            </>
-                                        ) : (
-                                            <i>No Name</i>
-                                        )}{" "}
-                                        {contact.favorite && <span>★</span>}
-                                    </Link> */}
+
                                 </li>
                             ))}
                         </ul>
@@ -73,7 +65,9 @@ export default function Root() {
                     )}
                 </nav>
             </div>
-            <div id="detail">
+            <div id="detail" className={
+                navigation.state === "loading" ? "loading" : ""
+            }>
                 <Outlet />
             </div>
         </>
