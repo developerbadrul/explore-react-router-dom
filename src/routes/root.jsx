@@ -5,7 +5,7 @@ import { Form, NavLink, Outlet, useLoaderData, useNavigation } from "react-route
 export default function Root() {
     const { contacts } = useLoaderData();
     const navigation = useNavigation()
-    console.log(contacts);
+    // console.log(contacts);
 
     return (
         <>
